@@ -12,7 +12,6 @@ const AddEmployeeComponent = () => {
 
     const saveOrUpdateEmployee = (e) => {
         e.preventDefault();
-
         const employee = {firstName, lastName, emailId}
 
         if(id){
@@ -79,6 +78,7 @@ const AddEmployeeComponent = () => {
                                         name = "firstName"
                                         className = "form-control"
                                         required
+                                        onBlur={(e) => validatText(e.target.value)}
                                         value = {firstName}
                                         onChange = {(e) => setFirstName(e.target.value)}
                                     >
