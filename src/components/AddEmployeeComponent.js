@@ -7,6 +7,7 @@ const AddEmployeeComponent = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [emailId, setEmailId] = useState('')
+    const [nameErr, setNameErr] = useState(false)
     const history = useHistory();
     const {id} = useParams();
 
@@ -46,10 +47,22 @@ const AddEmployeeComponent = () => {
         })
     }, [])
 
-    const validTextRegex = RegExp(
-        /^(?!\s)[A-Za-z\s]+$/
-      );
+
+    // const validTextRegex = new RegExp('/^[a-zA-Z ]*$/');
+    var validTextRegex = /^[a-zA-Z\s]*$/;
       
+    const validateRegex = (value) => {
+        console.log(value);
+        if (!validTextRegex.test(value)) {
+            console.log(true);
+          return true;
+        } else {
+            console.log(false);
+          return false;
+        }
+        
+      };
+
     const title = () => {
 
         if(id){
@@ -58,6 +71,17 @@ const AddEmployeeComponent = () => {
             return <h2 className = "text-center">Add Employee</h2>
         }
     }
+
+     const validate = (e) => { 
+         console.log(e.target.value);
+         setFirstName(e.target.value);  
+         if (validateRegex(e.target.value)) { 
+             setNameErr(true); 
+         } else { 
+             setNameErr(false);
+             //setFirstName(e.target.value);
+         } 
+      }; 
 
     return (
         <div>
@@ -78,11 +102,14 @@ const AddEmployeeComponent = () => {
                                         name = "firstName"
                                         className = "form-control"
                                         required
-                                        onBlur={(e) => validatText(e.target.value)}
+                                       
                                         value = {firstName}
-                                        onChange = {(e) => setFirstName(e.target.value)}
-                                    >
+                                         onChange = {(e) => validate(e)}
+                                        //  onChange = {(e) => setFirstName(e.target.value)}
+                                        >
+                                          
                                     </input>
+                                    {nameErr && <p style={{color: 'red'}}>Only Alphabets are allowed</p>} 
                                 </div>
 
                                 <div className = "form-group mb-2">
